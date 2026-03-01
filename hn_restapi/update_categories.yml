@@ -1,0 +1,21 @@
+info:
+  name: update_categories
+  type: http
+  seq: 8
+
+http:
+  method: PUT
+  url: "{{a}}/categories/5"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Adventure"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

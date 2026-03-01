@@ -1,0 +1,4 @@
+name: a
+variables:
+  - name: a
+    value: http://localhost:8181

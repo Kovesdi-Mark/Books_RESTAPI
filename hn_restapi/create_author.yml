@@ -1,0 +1,28 @@
+info:
+  name: create_author
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: "{{a}}/books"
+  body:
+    type: json
+    data: |-
+      {
+        "title":"Bibia",
+        "isbn": "9781234567890",
+        "price": "200",
+        "description": "Jezus elete meg elötte a isten",
+        "cover_url": "https://example.com/cover11.jpg",
+        "author_id": "1",
+        "publisher_id": "2",
+        "category_id": "3"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

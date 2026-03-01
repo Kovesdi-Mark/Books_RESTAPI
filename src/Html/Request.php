@@ -128,7 +128,32 @@ class Request
 
                 case "categories":
                     $id = $db->create(['name' => $data['name']]);
+                    break;
+
+                case "authors":
+                    $id = $db->create([
+                        'name' => $data['name'],
+                        'bio' => $data['bio']
+                    ]);
+
+                    break;
+                case "books":
+                    $id = $db->create([
+                        'title' => $data['title'],
+                        'isbn' => $data['isbn'],
+                        'price' => $data['price'],
+                        'description' => $data['description'],
+                        'cover_url' => $data['cover_url'], 
+                        'author_id' => $data['author_id'],
+                        'publisher_id' => $data['publisher_id'],
+                        'category_id' => $data['category_id']
+                    ]);
+                    break;
             }
+            $entity = $db->get($id);
+            Response::response($entity, 201);
+            return;
+            
         }
     }
 
@@ -158,8 +183,29 @@ class Request
         }
     }
 
-    private static function putRequest(){
+    private static function putRequest()
+    {
+        $uri = $_SERVER['REQUEST_URI'];
+        $arrUri = explode('/', $uri);
+        $putData = json_decode(file_get_contents("php://input"), true);
 
+        $resourceName = self::getResourceName($arrUri);
+        $resourceId = self::getResourceId($arrUri);
+
+        if ($resourceId){
+            $db = self::getDatabaseConnection($resourceName);
+            $entity = $db->get($resourceId);
+            $code = 404;
+            if ($entity){
+                $result=$db->update($resourceId, $putData);
+                if ($result){
+                    $code = 201;
+                }
+            }
+           $entity=$db->get($resourceId);
+           Response::response($entity, $code);
+           return;
+        } 
     }
 
     private static function getResourceName($arrUri){
