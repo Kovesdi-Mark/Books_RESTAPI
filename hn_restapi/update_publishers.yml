@@ -1,0 +1,21 @@
+info:
+  name: update_publishers
+  type: http
+  seq: 9
+
+http:
+  method: PUT
+  url: "{{a}}/publishers/1"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Epstein"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
